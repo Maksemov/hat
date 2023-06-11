@@ -33,7 +33,7 @@ const Hat = () => {
 
   const play = async (persons) => {
     setIsPlay(true);
-    let response = await fetch('http://localhost:5000/api/persons', {
+    let response = await fetch('https://server2-cyan.vercel.app/api/persons', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8'
