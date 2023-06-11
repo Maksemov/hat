@@ -1,10 +1,17 @@
 // Import packages
 const express = require("express");
+const cors = require('cors');
 const home = require("./routes/home");
 let persons = [];
 const api = '/api'
 // Middlewares
 const app = express();
+
+app.use(cors({
+  origin: ['https://hat-ten.vercel.app'],
+  methods: ['POST', 'GET'],
+  credentials: true,
+}))
 app.use(express.json());
 
 // Routes
