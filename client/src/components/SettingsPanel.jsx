@@ -1,5 +1,8 @@
 import { Box, Button, TextField, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react'
+import config from '../config';
+
+const api = config.api;
 
 const SettingsPanel = ({ setIsCreateGame, game, setGame, setIsInput }) => {
 
@@ -14,9 +17,7 @@ const SettingsPanel = ({ setIsCreateGame, game, setGame, setIsInput }) => {
             playersCount: Number(playersCount),
             token: crypto.randomUUID().slice(0, 7),
         }
-
-        const url = 'https://server2-cyan.vercel.app/api/games';
-        // const url = 'http://localhost:9001/api/games';
+        const url = `${api}/games`;
         fetch(url, {
             method: 'POST',
             headers: {

@@ -1,11 +1,14 @@
 import { Box, Button, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
+import config from '../config';
+
+const api = config.api;
 
 let timer = null;
 
 const PlayPanel = ({ game }) => {
 
-  const [person, setPerson] = useState('');
+  const [person, setPerson] = useState(null);
   const [playPersons, setPlayPersons] = useState([])
   const [seconds, setSeconds] = useState(5)
 
@@ -39,20 +42,31 @@ const PlayPanel = ({ game }) => {
   //   }
   // }, [seconds])
 
-  useEffect(() => {
-    if (game) {
-      const url = 'https://server2-cyan.vercel.app/api/persons';
-      // const url = `http://localhost:9001/api/persons`;
-      fetch(url)
-        .then(response => response.json())  // или response.text() вместо response.json()
-        .then(data => {
-          console.log(data);
-          debugger
-          setPlayPersons(data)
-        })
-        .catch(error => console.error(error))
-    }
-  }, [game])
+  // useEffect(() => {
+  //   if (game) {
+  //     const url = `${api}/persons`;
+  //     fetch(url)
+  //       .then(response => response.json())  // или response.text() вместо response.json()
+  //       .then(data => {
+  //         console.log(data);
+  //         debugger
+  //         setPlayPersons(data)
+  //       })
+  //       .catch(error => console.error(error))
+  //   }
+  // }, [game])
+
+  const updatePerson = () => {
+    const url = `${api}/person`;
+    fetch(url)
+      .then(response => response.json())  // или response.text() вместо response.json()
+      .then(data => {
+        console.log(data);
+        setPerson(data)
+      })
+      .catch(error => console.error(error))
+
+  }
 
   return (
     <Box
@@ -66,8 +80,8 @@ const PlayPanel = ({ game }) => {
     >
       <Button
         variant="contained"
-        disabled={!playPersons.length}
-      // onClick={(e) => updatePerson()}
+        // disabled={!playPersons.length}
+        onClick={(e) => updatePerson()}
       >
         Показать имя
       </Button>
@@ -75,13 +89,8 @@ const PlayPanel = ({ game }) => {
         {seconds}
       </Typography>
       <Typography variant="h4" component="div">
-        {person}
+        {person?.name}
       </Typography>
-      {playPersons.map(pers => (
-        <Typography key={pers._id} variant="h4" component="div">
-          {pers.name}
-        </Typography>
-      ))}
       {/* {playPersons.length
         ? null
         : (

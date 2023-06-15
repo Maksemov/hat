@@ -13,6 +13,23 @@ router.get('/persons', (req, res) => {
       });
 });
 
+router.get('/person', (req, res) => {
+   Person.find({})
+      .then(async (persons) => {
+         if (persons.length) {
+            const index = Math.floor(Math.random() * persons.length);
+            const person = persons[index];
+            const dd = await Person.deleteOne({ _id: person._id })
+            res.json(person);
+         } else {
+            res.json(null);
+         }
+      })
+      .catch((err) => {
+         res.status(500).json({ error: err.message });
+      });
+});
+
 router.get('/games', (req, res) => {
    const token = req.query.token;
    Game.find({ token: token.trim() })

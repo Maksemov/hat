@@ -1,6 +1,9 @@
 import { Box, Button, TextField } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import PlayPanel from './PlayPanel';
+import config from '../config';
+
+const api = config.api;
 
 const newPerson = {
     name: '',
@@ -32,8 +35,7 @@ const InputPanel = ({ game, setIsInput, setGame }) => {
 
     const connectToGame = () => {
 
-        const url = `https://server2-cyan.vercel.app/api/games?token=${token}`;
-        // const url = `http://localhost:9001/api/games?token=${token}`;
+        const url = `${api}/games?token=${token}`;
         fetch(url)
             .then(response => response.json())  // или response.text() вместо response.json()
             .then(data => {
@@ -45,8 +47,7 @@ const InputPanel = ({ game, setIsInput, setGame }) => {
     }
 
     const play = async (persons) => {
-        const url = 'https://server2-cyan.vercel.app/api/persons';
-        // const url = 'http://localhost:9001/api/persons';
+        const url = `${api}/persons`;
         let response = await fetch(url, {
             method: 'POST',
             headers: {
