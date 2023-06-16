@@ -27,7 +27,7 @@ const InputPanel = ({ game, setIsInput, setGame }) => {
         if (game) {
             const newPersons = [];
             for (let i = 0; i < (game.personsCount); i++) {
-                newPersons[i] = { ...newPerson };
+                newPersons[i] = { ...newPerson, game: game._id };
             }
             setPersons(newPersons);
         }

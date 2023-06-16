@@ -14,16 +14,27 @@ router.get('/persons', (req, res) => {
 });
 
 router.get('/person', (req, res) => {
-   Person.find({})
-      .then(async (persons) => {
-         if (persons.length) {
-            const index = Math.floor(Math.random() * persons.length);
-            const person = persons[index];
-            const dd = await Person.deleteOne({ _id: person._id })
-            res.json(person);
-         } else {
-            res.json(null);
-         }
+   const gameId = req.query.game;
+
+   Game.findById(gameId)
+      .then(async (game) => {
+         Person.find({ round: game.round, game: game._id }).populate('game')
+            .then(async (persons) => {
+               if (persons.length) {
+                  const index = Math.floor(Math.random() * persons.length);
+                  const person = persons[index];
+                  await Person.findByIdAndUpdate(
+                     persons[index]._id,
+                     { round: persons[index].round + 1 }
+                  );
+                  res.json(person);
+               } else {
+                  res.json(null);
+               }
+            })
+            .catch((err) => {
+               res.status(500).json({ error: err.message });
+            });
       })
       .catch((err) => {
          res.status(500).json({ error: err.message });
@@ -43,7 +54,7 @@ router.get('/games', (req, res) => {
 
 router.post('/persons', (req, res) => {
    Person
-      .insertMany(req.body)
+      .insertMany(req.body.map(pers => ({ ...pers, round: 1 })))
       .then((docs) => {
          res.json(docs);
       })
@@ -53,7 +64,7 @@ router.post('/persons', (req, res) => {
 });
 
 router.post('/games', (req, res) => {
-   const game = new Game(req.body);
+   const game = new Game({ ...req.body, round: 1 });
 
    game
       .save()

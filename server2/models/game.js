@@ -15,6 +15,10 @@ const gameSchema = new Schema({
       required: true,
       unique: true
    },
+   round: {
+      type: Number,
+      required: true,
+   },
 });
 
 module.exports =  mongoose.model('Game', gameSchema);

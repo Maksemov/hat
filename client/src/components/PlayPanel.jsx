@@ -57,7 +57,7 @@ const PlayPanel = ({ game }) => {
   // }, [game])
 
   const updatePerson = () => {
-    const url = `${api}/person`;
+    const url = `${api}/person?game=${game._id}`;
     fetch(url)
       .then(response => response.json())  // или response.text() вместо response.json()
       .then(data => {
