@@ -27,7 +27,10 @@ const InputPanel = ({ game, setIsInput, setGame }) => {
         if (game) {
             const newPersons = [];
             for (let i = 0; i < (game.personsCount); i++) {
-                newPersons[i] = { ...newPerson, game: game._id };
+                newPersons[i] = {
+                    ...newPerson,
+                    game: game._id,
+                };
             }
             setPersons(newPersons);
         }
@@ -86,13 +89,17 @@ const InputPanel = ({ game, setIsInput, setGame }) => {
                     readOnly: true,
                 }}
             />
-            <Button
-                variant="text"
-                onClick={() => setIsInput(false)}
-            >
-                Назад
-            </Button>
-            {!game
+            {!isPlay
+                ? (
+                    <Button
+                        variant="text"
+                        onClick={() => setIsInput(false)}
+                    >
+                        Назад
+                    </Button>
+                )
+                : null}
+            {!game && !isPlay
                 ? (
                     <TextField
                         label="Введите токен"
@@ -102,7 +109,7 @@ const InputPanel = ({ game, setIsInput, setGame }) => {
                 )
                 : null}
 
-            {persons.map((player, i) => (
+            {!isPlay && persons.map((player, i) => (
                 <TextField
                     key={i}
                     label={`${i + 1} личность`}
@@ -110,7 +117,7 @@ const InputPanel = ({ game, setIsInput, setGame }) => {
                     onChange={(e) => onChangePerson(i, e)}
                 />
             ))}
-            {!game
+            {!game && !isPlay
                 ? (
                     <Button
                         variant="contained"
@@ -120,7 +127,7 @@ const InputPanel = ({ game, setIsInput, setGame }) => {
                     </Button>
                 )
                 : null}
-            {game
+            {game && !isPlay
                 ? (
                     <Button
                         variant="contained"

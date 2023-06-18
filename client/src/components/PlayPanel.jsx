@@ -85,9 +85,9 @@ const PlayPanel = ({ game }) => {
       >
         Показать имя
       </Button>
-      <Typography variant="h4" component="div">
+      {/* <Typography variant="h4" component="div">
         {seconds}
-      </Typography>
+      </Typography> */}
       <Typography variant="h4" component="div">
         {person?.name}
       </Typography>
