@@ -12,7 +12,7 @@ const app = express();
 
 app.use(cors({
     // origin: ['https://hat-ten.vercel.app'],
-    origin: ['http://localhost:3000'],
+    // origin: ['http://localhost:3000'],
     methods: ['POST', 'GET'],
     credentials: true,
 }))
