@@ -13,7 +13,7 @@ const Hat = () => {
 
   const [persons, setPersons] = useState([]);
   const [game, setGame] = useState(null);
-
+  //
   const [isCreateGame, setIsCreateGame] = useState(false);
   const [isInput, setIsInput] = useState(false);
 
